@@ -10,13 +10,21 @@ class Api {
         this.middleware = null
     }
 
+    prepareException(err) {
+        return {
+            'statusCode' : err.statusCode,
+            'error' : err.error,
+            'options' : err.options
+        }
+    }
+
     async init() {
         try {
             await this.credentials.login()
             await this.credentials.setSession()
         }
         catch (err) {
-            console.log(err)
+            throw this.prepareException(err)
         }
     }
 
@@ -32,8 +40,7 @@ class Api {
             return productObject
         }
         catch (err) {
-            console.log(err)
-            return false
+            throw this.prepareException(err)
         }
     }
 
@@ -50,8 +57,7 @@ class Api {
             return result
         }
         catch (err) {
-            console.log(err)
-            return false
+            throw this.prepareException(err)
         }
     }
     /**
@@ -71,9 +77,55 @@ class Api {
             return result
         }
         catch (err) {
-            console.log(err)
+            throw this.prepareException(err)
         }
     }
+
+    async createOrder(order) {
+        try {
+            if (this.middleware) {
+                order = this.middleware.parse('order', 'export', order)
+            }
+    
+            let result = await Request.order.create(order)
+
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+
+    async invoiceOrder(orderId) {
+        try {
+            let result = await Request.order.invoiceOrder(orderId)
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+
+    async invoiceOrder(orderId) {
+        try {
+            let result = await Request.order.cancelOrder(orderId)
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+
+    async cancelInvoiceOrder(orderId) {
+        try {
+            let result = await Request.order.invoiceOrder(orderId)
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+    
 }
 
 class Credentials {
