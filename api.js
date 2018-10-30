@@ -43,7 +43,26 @@ class Api {
             throw this.prepareException(err)
         }
     }
+    /**
+     * 
+     * @param {*} id 
+     */
+    async getOrder(id = null) {
+        try {
+            let orderApi = new Request.order(this.credentials)
+            
+            let result = await orderApi.get(id)
+            
+            if (this.middleware) {
+                result = this.middleware.parse('order', 'import', result)
+            }
 
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
     async createCustomer(data) {
         
         try {

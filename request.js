@@ -91,7 +91,7 @@ class Order extends Request {
     
 }
 /**
- * 
+ * Authentication request representation
  */
 class Auth extends Request {
     constructor(credentials) {
