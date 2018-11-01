@@ -24,7 +24,7 @@ class Request {
         })
 
         this.extra_path = ''
-
+        console.log(result)
         return result
     }
 
@@ -122,6 +122,19 @@ class Product extends Request {
         super(credentials)
         this.request_path = '/operacional/produtos'
     }
+    /**
+     * Returns product's image
+     * @param {*} idProduct 
+     * @param {*} nrItem 
+     */
+    async getImage(idProduct, nrItem = 0) {
+        if (idProduct == null) {
+            throw new Error('Product id is required')
+        }
+        this.extra_path = '/'+idProduct+'/fotos'
+
+        return await this.executeRequest('GET', null, {nrItem : nrItem}, this.credentials_headers)
+    }   
 
 }
 /**
@@ -153,10 +166,32 @@ class Inventory extends Request {
     }
 }
 
+class Feed extends Request {
+    constructor(credentials) {
+        super(credentials)
+        this.request_path = '/pedidovenda-rest/feed'
+    }
+
+    async get() {
+        return await this.executeRequest('GET', null, null, this.credentials_headers)
+    }
+
+    async read (feedId) {
+        if (!feedId) {
+            throw new Error('Invalid feed id')
+        }
+        this.extra_path = '/' + feedId
+
+        return await this.executeRequest('PUT', null, null, this.credentials_headers)
+    }
+}
+
+
 module.exports = {
     order : Order,
     auth: Auth,
     product : Product,
     person : Person,
-    inventory : Inventory
+    inventory : Inventory,
+    feed : Feed
 }

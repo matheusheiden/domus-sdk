@@ -1,5 +1,4 @@
 const Request = require('./request.js')
-
 class Api {
     /**
      * 
@@ -105,8 +104,8 @@ class Api {
             if (this.middleware) {
                 order = this.middleware.parse('order', 'export', order)
             }
-    
-            let result = await Request.order.create(order)
+            let orderManager = new Request.order(this.credentials)
+            let result = await orderManager.create(order)
 
             return result
         }
@@ -117,7 +116,8 @@ class Api {
 
     async invoiceOrder(orderId) {
         try {
-            let result = await Request.order.invoiceOrder(orderId)
+            let orderManager = new Request.order(this.credentials)
+            let result = await orderManager.invoiceOrder(orderId)
             return result
         }
         catch (err) {
@@ -127,7 +127,8 @@ class Api {
 
     async invoiceOrder(orderId) {
         try {
-            let result = await Request.order.cancelOrder(orderId)
+            let orderManager = new Request.order(this.credentials)
+            let result = await orderManager.cancelOrder(orderId)
             return result
         }
         catch (err) {
@@ -137,7 +138,30 @@ class Api {
 
     async cancelInvoiceOrder(orderId) {
         try {
-            let result = await Request.order.invoiceOrder(orderId)
+            let orderManager = new Request.order(this.credentials)
+            let result = await orderManager.invoiceOrder(orderId)
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+
+    async getFeed() {
+        try {
+            let feedManager = new Request.feed(this.credentials)
+            let result = await feedManager.get()
+            return result
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+
+    async markFeedAsRead(feedId) {
+        try {
+            let feedManager = new Request.feed(this.credentials)
+            let result = await feedManager.read(feedId)
             return result
         }
         catch (err) {
