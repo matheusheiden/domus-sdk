@@ -24,7 +24,6 @@ class Request {
         })
 
         this.extra_path = ''
-        console.log(result)
         return result
     }
 
