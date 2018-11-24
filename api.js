@@ -98,7 +98,23 @@ class Api {
             throw this.prepareException(err)
         }
     }
+    async getCustomer(id = null) {
+        try {
+            let customerApi = new Request.person(this.credentials)
+            
+            let result = await customerApi.get(id)
+            
+            if (this.middleware) {
+                result = this.middleware.parse('customer', 'import', result)
+            }
 
+            return result
+        }
+        catch (err) {
+            console.log(err)
+            throw this.prepareException(err)
+        }
+    }
     async createOrder(order) {
         try {
             if (this.middleware) {

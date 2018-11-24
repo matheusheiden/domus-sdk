@@ -14,14 +14,18 @@ class Request {
         if (params) {
             url = url + '?' + qs.stringify(params)
         }
-        let result = await rp({
+        let config = {
             uri : url,
             method : requestType,
             timeout : 900000,
-            body : body,
             json : true,
-            headers : headers
-        })
+            headers : headers,
+        }
+        //verify if body is defined before setting it
+        if (body) { // if this isn't done content-length can be set errouneously
+            config['body'] = body;
+        }
+        let result = await rp(config)
 
         this.extra_path = ''
         return result
@@ -44,6 +48,7 @@ class Request {
 
     get credentials_headers () {
         return {
+            'Cache-Control': 'no-cache',
             'X-Session-ID' : this.credentials.data.token
         }
     }
@@ -168,7 +173,7 @@ class Inventory extends Request {
 class Feed extends Request {
     constructor(credentials) {
         super(credentials)
-        this.request_path = '/pedidovenda-rest/feed'
+        this.request_path = '/operacional/consultasql/CONSULTA_FEED'
     }
 
     async get() {
