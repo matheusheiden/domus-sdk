@@ -86,7 +86,7 @@ class Api {
         try {
             let inventoryApi = new Request.inventory(this.credentials)
             
-            let result = await inventoryApi.get(id)
+            let result = await inventoryApi.get(this.credentials.inventory_id, id)
             
             if (this.middleware) {
                 result = this.middleware.parse('inventory', 'import', result)
@@ -194,6 +194,7 @@ class Credentials {
         this.filial = cred['filial']
         this.server = cred['server'],
         this.company_id = cred['company_id']
+        this.inventory_id = cred['inventory_id'];
         this.auth = new Request.auth(this)
     }
 
