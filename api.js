@@ -184,6 +184,16 @@ class Api {
             throw this.prepareException(err)
         }
     }
+
+    async getAddress(query) {
+        try {
+            let addressManager = new Request.address(this.credentials)
+            return await addressManager.get(query)
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
     
 }
 

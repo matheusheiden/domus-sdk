@@ -59,7 +59,7 @@ class Request {
 class Order extends Request {
     constructor(credentials) {
         super(credentials)
-        this.request_path = '/operacional/pedidocompra'
+        this.request_path = '/pedidovenda-rest/pedidos'
     }
 
 
@@ -189,6 +189,16 @@ class Feed extends Request {
         return await this.executeRequest('PUT', null, null, this.credentials_headers)
     }
 }
+class Address extends Request {
+    constructor(credentials) {
+        super(credentials)
+        this.request_path = '/operacional/enderecos'
+    }
+
+    async get(query) {
+        return await this.executeRequest('GET', null, query, this.credentials_headers)
+    }
+}
 
 
 module.exports = {
@@ -197,5 +207,6 @@ module.exports = {
     product : Product,
     person : Person,
     inventory : Inventory,
-    feed : Feed
+    feed : Feed,
+    address : Address
 }
