@@ -33,7 +33,7 @@ class Api {
             let productObject = await product.get(id)
 
             if (this.middleware) {
-                productObject = this.middleware.parse('product', 'import', productObject)
+                productObject = await this.middleware.parse('product', 'import', productObject)
             }
 
             return productObject
@@ -53,7 +53,7 @@ class Api {
             let result = await orderApi.get(id)
             
             if (this.middleware) {
-                result = this.middleware.parse('order', 'import', result)
+                result = await this.middleware.parse('order', 'import', result)
             }
 
             return result
@@ -66,7 +66,7 @@ class Api {
         
         try {
             if (this.middleware) {
-                data = this.middleware.parse('customer', 'export', data)
+                data = await this.middleware.parse('customer', 'export', data)
             }
     
             let customerApi = new Request.person(this.credentials)
@@ -89,7 +89,7 @@ class Api {
             let result = await inventoryApi.get(this.credentials.inventory_id, id)
             
             if (this.middleware) {
-                result = this.middleware.parse('inventory', 'import', result)
+                result = await this.middleware.parse('inventory', 'import', result)
             }
 
             return result
@@ -105,7 +105,7 @@ class Api {
             let result = await customerApi.get(id)
             
             if (this.middleware) {
-                result = this.middleware.parse('customer', 'import', result)
+                result = await this.middleware.parse('customer', 'import', result)
             }
 
             return result
@@ -118,7 +118,7 @@ class Api {
     async createOrder(order) {
         try {
             if (this.middleware) {
-                order = this.middleware.parse('order', 'export', order)
+                order = await this.middleware.parse('order', 'export', order)
             }
             let orderManager = new Request.order(this.credentials)
             let result = await orderManager.create(order)
