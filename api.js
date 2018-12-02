@@ -194,6 +194,17 @@ class Api {
             throw this.prepareException(err)
         }
     }
+
+    async getCustomerByDocument(document) {
+        try {
+            let customerManager = new Request.customer(this.credentials)
+            return await customerManager.getByDocument(document)
+        }
+        catch(err) {
+            throw this.prepareException(err)
+        }
+
+    }
     
 }
 

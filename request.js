@@ -150,6 +150,11 @@ class Person extends Request {
         this.request_path = '/pedidovenda-rest/pessoas'
     }
 
+    async getByDocument(document) {
+        this.extra_path = '/documento'
+        return await this.executeRequest('GET', null, {num : document}, this.credentials_headers)
+    }
+
 }
 
 /**
