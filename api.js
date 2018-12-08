@@ -201,7 +201,6 @@ class Api {
             return await customerManager.getByDocument(document)
         }
         catch(err) {
-            console.log(err)
             throw this.prepareException(err)
         }
 
