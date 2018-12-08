@@ -205,6 +205,16 @@ class Api {
         }
 
     }
+    async getCustomerDefaultOrderData(id) {
+        try {
+            let customerManager = new Request.person(this.credentials)
+            return await customerManager.getDefaultOrderData(id)
+        }
+        catch(err) {
+            throw this.prepareException(err)
+        }
+
+    }
     
 }
 

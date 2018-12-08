@@ -155,6 +155,10 @@ class Person extends Request {
         return await this.executeRequest('GET', null, {num : document}, this.credentials_headers)
     }
 
+    async getDefaultOrderData(id) {
+        this.extra_path = '/'+id+'/valoresPadraoPedido'
+        return await this.executeRequest('GET', null, null, this.credentials_headers)
+    }
 }
 
 /**
