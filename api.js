@@ -197,10 +197,11 @@ class Api {
 
     async getCustomerByDocument(document) {
         try {
-            let customerManager = new Request.customer(this.credentials)
+            let customerManager = new Request.person(this.credentials)
             return await customerManager.getByDocument(document)
         }
         catch(err) {
+            console.log(err)
             throw this.prepareException(err)
         }
 
