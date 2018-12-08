@@ -44,6 +44,19 @@ class Api {
     }
     /**
      * 
+     * @param {*} productId 
+     */
+    async getProductImage(productId, id=null) {
+        try {
+            let productManager = new Request.product(this.credentials)
+            return await productManager.getImage(productId, id)
+        }
+        catch (err) {
+            throw this.prepareException(err)
+        }
+    }
+    /**
+     * 
      * @param {*} id 
      */
     async getOrder(id = null) {
