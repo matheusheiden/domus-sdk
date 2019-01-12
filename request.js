@@ -185,7 +185,7 @@ class Inventory extends Request {
 class Feed extends Request {
     constructor(credentials) {
         super(credentials)
-        this.request_path = '/operacional/consultasql/CONSULTA_FEED'
+        this.request_path = '/pedidovenda-rest/feed'
     }
 
     async get() {
