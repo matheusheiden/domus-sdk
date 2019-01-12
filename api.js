@@ -49,7 +49,7 @@ class Api {
     async getProductImage(productId, id=null) {
         try {
             let productManager = new Request.product(this.credentials)
-            return await productManager.getImage(productId, id)
+            return await Buffer.from(await productManager.getImage(productId, id))
         }
         catch (err) {
             throw this.prepareException(err)

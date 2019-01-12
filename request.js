@@ -9,7 +9,7 @@ class Request {
         this.extra_path = ''
     }
 
-    async executeRequest(requestType, body, params = null, headers = null) {
+    async executeRequest(requestType, body, params = null, headers = null, isJson=true) {
         let url = this.credentials['server'] + this.request_path + this.extra_path
         if (params) {
             url = url + '?' + qs.stringify(params)
@@ -18,8 +18,11 @@ class Request {
             uri : url,
             method : requestType,
             timeout : 900000,
-            json : true,
+            json : isJson,
             headers : headers,
+        }
+        if (!isJson) {
+            config['encoding'] = null
         }
         //verify if body is defined before setting it
         if (body) { // if this isn't done content-length can be set errouneously
@@ -137,7 +140,7 @@ class Product extends Request {
         }
         this.extra_path = '/'+idProduct+'/fotos'
 
-        return await this.executeRequest('GET', null, {nrItem : nrItem}, this.credentials_headers)
+        return await this.executeRequest('GET', null, {nrItem : nrItem}, this.credentials_headers, false)
     }   
 
 }
