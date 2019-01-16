@@ -154,7 +154,7 @@ class Api {
         }
     }
 
-    async invoiceOrder(orderId) {
+    async cancelOrder(orderId) {
         try {
             let orderManager = new Request.order(this.credentials)
             let result = await orderManager.cancelOrder(orderId)
