@@ -81,7 +81,7 @@ class Order extends Request {
             throw new Error('No order to cancel')
         }
 
-        this.extra_path = '/'+id+'/efetivar'
+        this.extra_path = '/'+id+'/efetivacao'
         
         return await this.executeRequest('POST', null, null, this.credentials_headers)
     }
@@ -91,7 +91,7 @@ class Order extends Request {
             throw new Error('No order to cancel')
         }
 
-        this.extra_path = '/'+id+'/efetivar'
+        this.extra_path = '/'+id+'/efetivacao'
         
         return await this.executeRequest('DELETE', null, null, this.credentials_headers)
     }
